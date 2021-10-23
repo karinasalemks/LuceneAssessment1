@@ -30,12 +30,16 @@ import org.apache.lucene.store.FSDirectory;
 public class Inquierer {
     private static String INDEX_DIR = "src/index";
 
-    public void searcher(List<Map<String, String>> queries, int type) throws IOException {
+    public void searchQueries(List<Map<String, String>> queries, int type) throws IOException {
         // Create directory if it does not exist
         File outputDir = new File("results");
         if (!outputDir.exists())
             outputDir.mkdirs();
 
+        /**
+         * To Query using different analyzers: 0-> standard analyzer 1-> english
+         * analyzer 2->simple analyzer 3->whitespace analyzer
+         */
         Analyzer analyzer;
         if (type == 1) {
             analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
@@ -43,7 +47,7 @@ public class Inquierer {
             analyzer = new SimpleAnalyzer();
         } else if (type == 3) {
             analyzer = new WhitespaceAnalyzer();
-        }  else {
+        } else {
             analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
         }
 
@@ -55,6 +59,10 @@ public class Inquierer {
 
         String runIdentifier = "";
         String fileName = "";
+        /**
+         * For each analyzer run the index searcher with two similarities the BM25
+         * Similiarity and the Classic Similiarity one
+         */
         for (int i = 0; i < 2; i++) {
             ArrayList<String> resultsList = new ArrayList<String>();
             if (i == 0) {
@@ -80,19 +88,19 @@ public class Inquierer {
                 System.out.println("Inquiring with VSM Scoring");
                 runIdentifier = "simpleQueryVSMScoring";
                 switch (type) {
-                    case 1:
-                        fileName = "resultsVSM_English.txt";
-                        break;
-                    case 2:
-                        fileName = "resultsVSM_Simple.txt";
-                        break;
-                    case 3:
-                        fileName = "resultsVSM_Witespace.txt";
-                        break;
-                    default:
-                        fileName = "resultsVSM_Standard.txt";
-                        break;
-                    }
+                case 1:
+                    fileName = "resultsVSM_English.txt";
+                    break;
+                case 2:
+                    fileName = "resultsVSM_Simple.txt";
+                    break;
+                case 3:
+                    fileName = "resultsVSM_Witespace.txt";
+                    break;
+                default:
+                    fileName = "resultsVSM_Standard.txt";
+                    break;
+                }
             }
 
             parseSearch(queries, analyzer, indexSearcher, resultsList, runIdentifier);
@@ -112,7 +120,7 @@ public class Inquierer {
 
                 Query query = queryParser.parse(Query.get("Query"));
 
-                // Searching For Query
+                // Searching for the top hits for the query
                 TopDocs topDocs = indexSearcher.search(query, 1400);
                 ScoreDoc[] scores = topDocs.scoreDocs;
 

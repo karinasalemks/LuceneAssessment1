@@ -28,6 +28,10 @@ public class Indexer {
     private static String INDEX_DIR = "src/index";
 
     void indexDoc(ArrayList<Document> documents, int type) throws IOException {
+        /**
+         * To Index using different analyzers: 0-> standard analyzer 1-> english
+         * analyzer 2->simple analyzer 3->whitespace analyzer
+         */
         Analyzer analyzer;
         if (type == 1) {
             System.out.println("Indexing using English Analyzer");

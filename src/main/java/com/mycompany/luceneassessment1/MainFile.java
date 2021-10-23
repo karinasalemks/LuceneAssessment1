@@ -15,15 +15,18 @@ public class MainFile {
         documents = documentParser.getParsedFile();
         Indexer indexer = new Indexer();
         Inquierer inquierer = new Inquierer();
+        /**
+         * To Index using different analyzers: 0-> standard analyzer 1-> english
+         * analyzer 2->simple analyzer 3->whitespace analyzer
+         * As well as search the queries using these analyzers
+         */
         indexer.indexDoc(documents, 0);
-        inquierer.searcher(queries, 0);
+        inquierer.searchQueries(queries, 0);
         indexer.indexDoc(documents, 1);
-        inquierer.searcher(queries, 1);
+        inquierer.searchQueries(queries, 1);
         indexer.indexDoc(documents, 2);
-        inquierer.searcher(queries, 2);
+        inquierer.searchQueries(queries, 2);
         indexer.indexDoc(documents, 3);
-        inquierer.searcher(queries, 3);
-        indexer.indexDoc(documents, 4);
-        inquierer.searcher(queries, 4);
+        inquierer.searchQueries(queries, 3);
     }
 }
