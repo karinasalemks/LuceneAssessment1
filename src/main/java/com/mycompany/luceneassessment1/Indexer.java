@@ -28,9 +28,11 @@ public class Indexer {
     void indexDoc(ArrayList<Document> documents, int type) throws IOException {
         Analyzer analyzer;
         if (type == 1) {
-            analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            // analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            analyzer = new EnglishAnalyzer();
         } else {
-            analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            // analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            analyzer = new StandardAnalyzer();
         }
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));
         IndexWriterConfig indexConfig = new IndexWriterConfig(analyzer);

@@ -37,10 +37,12 @@ public class Inquierer {
         Analyzer analyzer;
         if (type == 1) {
             System.out.println("English Analyzer");
-            analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            // analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            analyzer = new EnglishAnalyzer();
         } else {
             System.out.println("Standard Analyzer");
-            analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            // analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            analyzer = new StandardAnalyzer();
         }
 
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));
