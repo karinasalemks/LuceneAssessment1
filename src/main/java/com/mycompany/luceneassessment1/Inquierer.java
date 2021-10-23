@@ -27,21 +27,27 @@ import org.apache.lucene.store.FSDirectory;
 
 public class Inquierer {
     private static String INDEX_DIR = "src/index";
-    DocumentParser documentParser = new DocumentParser();
 
-    public void searcher() throws IOException {
+    public void searcher(List<Map<String, String>> queries, int type) throws IOException {
         // Create directory if it does not exist
         File outputDir = new File("results");
         if (!outputDir.exists())
             outputDir.mkdirs();
 
-        Analyzer standardAnalyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+        Analyzer analyzer;
+        if (type == 1) {
+            System.out.println("English Analyzer");
+            analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+        } else {
+            System.out.println("Standard Analyzer");
+            analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+        }
+
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));
 
         // create objects to read and search across the index
         DirectoryReader directoryReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
-        List<Map<String, String>> queries = documentParser.getQueries();
 
         String runIdentifier = "";
         String fileName = "";
@@ -51,40 +57,18 @@ public class Inquierer {
                 indexSearcher.setSimilarity(new BM25Similarity());
                 System.out.println("Inquiring with BM25 Scoring");
                 runIdentifier = "simpleQueryBM25Scoring";
-                fileName = "resultsBMS25.txt";
+                fileName = type == 1 ? "resultsBMS25_EA.txt" : "resultsBMS25_SA.txt";
             } else {
                 indexSearcher.setSimilarity(new ClassicSimilarity());
                 System.out.println("Inquiring with VSM Scoring");
                 runIdentifier = "simpleQueryVSMScoring";
-                fileName = "resultsVSM25.txt";
+                fileName = type == 1 ? "resultsVSM_EA.txt" : "resultsVSM_SA.txt";
             }
 
-            parseSearch(queries, standardAnalyzer, indexSearcher, resultsList, runIdentifier);
+            parseSearch(queries, analyzer, indexSearcher, resultsList, runIdentifier);
 
             Files.write(Paths.get("results/" + fileName), resultsList, Charset.forName("UTF-8"));
         }
-    }
-
-    public void inquireVSM() throws IOException {
-        Analyzer standardAnalyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
-        Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));
-
-        // create objects to read and search across the index
-        DirectoryReader directoryReader = DirectoryReader.open(directory);
-        IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
-
-        ArrayList<String> resultsList = new ArrayList<String>();
-        System.out.println("Inquiring with VSM Scoring");
-        // Create directory if it does not exist
-        File outputDir = new File("results");
-        if (!outputDir.exists())
-            outputDir.mkdirs();
-
-        List<Map<String, String>> queries = documentParser.getQueries();
-
-        parseSearch(queries, standardAnalyzer, indexSearcher, resultsList, "simpleQueryVSMScoring");
-
-        Files.write(Paths.get("results/resultsVSM.txt"), resultsList, Charset.forName("UTF-8"));
     }
 
     private static void parseSearch(List<Map<String, String>> queryList, Analyzer analyzer, IndexSearcher indexSearcher,

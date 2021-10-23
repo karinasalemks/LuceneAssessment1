@@ -87,14 +87,14 @@ public class DocumentParser {
                         break;
                     }
                     line = bufferedReader.readLine();
-                    if(line == null){
+                    if (line == null) {
                         if (!type.equals("") && !data.equals("")) {
                             document.add(new Field(type, data, fieldType));
                             documents.add(document);
                         }
                     }
                 }
-     
+
             }
         }
         bufferedReader.close();
@@ -145,7 +145,7 @@ public class DocumentParser {
                         break;
                     }
                     line = bufferedReader.readLine();
-                    if(line ==null){
+                    if (line == null) {
                         if (!type.equals("") && !data.equals("")) {
                             queryMap.put(type, data);
                             queries.add(queryMap);

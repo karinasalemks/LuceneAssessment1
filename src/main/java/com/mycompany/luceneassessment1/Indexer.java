@@ -24,18 +24,19 @@ import org.apache.lucene.store.FSDirectory;
  */
 public class Indexer {
     private static String INDEX_DIR = "src/index";
-    DocumentParser documentParser = new DocumentParser();
 
-    void indexDoc() throws IOException{
-        ArrayList<Document> documents = new ArrayList<Document>();
-        Analyzer standardAnalyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+    void indexDoc(ArrayList<Document> documents, int type) throws IOException {
+        Analyzer analyzer;
+        if (type == 1) {
+            analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+        } else {
+            analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+        }
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));
-        IndexWriterConfig indexConfig = new IndexWriterConfig(standardAnalyzer);
+        IndexWriterConfig indexConfig = new IndexWriterConfig(analyzer);
         indexConfig.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
         IndexWriter indexWriter = new IndexWriter(directory, indexConfig);
         try {
-            // documents = DocumentParser.getParsedQueries();
-            documents = documentParser.getParsedFile();
             if (documents.size() > 0) {
                 indexWriter.addDocuments(documents);
             }
@@ -46,6 +47,4 @@ public class Indexer {
             e.printStackTrace();
         }
     }
-
-  
 }
