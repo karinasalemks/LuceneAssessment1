@@ -38,7 +38,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.company.MainFile</mainClass>
+                            <mainClass>com.mycompany.luceneassessment1.MainFile</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
