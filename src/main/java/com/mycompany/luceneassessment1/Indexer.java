@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
@@ -31,19 +30,16 @@ public class Indexer {
     void indexDoc(ArrayList<Document> documents, int type) throws IOException {
         Analyzer analyzer;
         if (type == 1) {
-            System.out.println("English Analyzer");
+            System.out.println("Indexing using English Analyzer");
             analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
         } else if (type == 2) {
-            System.out.println("Simple Analyzer");
+            System.out.println("Indexing using Simple Analyzer");
             analyzer = new SimpleAnalyzer();
         } else if (type == 3) {
-            System.out.println("Keyword Analyzer");
-            analyzer = new KeywordAnalyzer();
-        } else if (type == 4) {
-            System.out.println("Whitespace Analyzer");
+            System.out.println("Indexing using Whitespace Analyzer");
             analyzer = new WhitespaceAnalyzer();
         } else {
-            System.out.println("Standard Analyzer");
+            System.out.println("Indexing using Standard Analyzer");
             analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
         }
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));

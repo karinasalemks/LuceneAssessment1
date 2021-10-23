@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
-import org.apache.lucene.analysis.core.StopAnalyzer;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -40,19 +38,12 @@ public class Inquierer {
 
         Analyzer analyzer;
         if (type == 1) {
-            System.out.println("English Analyzer");
             analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
         } else if (type == 2) {
-            System.out.println("Simple Analyzer");
             analyzer = new SimpleAnalyzer();
         } else if (type == 3) {
-            System.out.println("Keyword Analyzer");
-            analyzer = new KeywordAnalyzer();
-        } else if (type == 4) {
-            System.out.println("Whitespace Analyzer");
             analyzer = new WhitespaceAnalyzer();
-        } else {
-            System.out.println("Standard Analyzer");
+        }  else {
             analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
         }
 
@@ -78,9 +69,6 @@ public class Inquierer {
                     fileName = "resultsBMS25_Simple.txt";
                     break;
                 case 3:
-                    fileName = "resultsBMS25_Keyword.txt";
-                    break;
-                case 4:
                     fileName = "resultsBMS25_Whitespace.txt";
                     break;
                 default:
@@ -99,9 +87,6 @@ public class Inquierer {
                         fileName = "resultsVSM_Simple.txt";
                         break;
                     case 3:
-                        fileName = "resultsVSM_Keyword.txt";
-                        break;
-                    case 4:
                         fileName = "resultsVSM_Witespace.txt";
                         break;
                     default:
