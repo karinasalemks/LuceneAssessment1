@@ -29,7 +29,14 @@ public class Inquierer {
     private static String INDEX_DIR = "src/index";
     DocumentParser documentParser = new DocumentParser();
 
-    public void searchBM25() throws IOException {
+    public void searcher(String num) throws IOException {
+        ArrayList<String> resultsList = new ArrayList<String>();
+    
+        // Create directory if it does not exist
+        File outputDir = new File("results");
+        if (!outputDir.exists())
+            outputDir.mkdirs();
+
         Analyzer standardAnalyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));
 
@@ -37,20 +44,22 @@ public class Inquierer {
         DirectoryReader directoryReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
 
-        indexSearcher.setSimilarity(new BM25Similarity());
-
-        ArrayList<String> resultsList = new ArrayList<String>();
-        System.out.println("Inquiring with BM25 Scoring");
-        // Create directory if it does not exist
-        File outputDir = new File("results");
-        if (!outputDir.exists())
-            outputDir.mkdirs();
+        String runIdentifier ="";
+        if(num.equals("1")){
+            indexSearcher.setSimilarity(new BM25Similarity());
+            System.out.println("Inquiring with BM25 Scoring");
+            runIdentifier ="simpleQueryBM25Scoring";
+        }else{
+            indexSearcher.setSimilarity(new ClassicSimilarity());
+            System.out.println("Inquiring with VSM Scoring");
+            runIdentifier ="simpleQueryVSMScoring";
+        }
 
         List<Map<String, String>> queries = documentParser.getQueries();
 
-        parseSearch(queries, standardAnalyzer, indexSearcher, resultsList, "simpleQueryBM25Scoring");
+        parseSearch(queries, standardAnalyzer, indexSearcher, resultsList,runIdentifier );
 
-        Files.write(Paths.get("results/resultsBM25.txt"), resultsList, Charset.forName("UTF-8"));
+        Files.write(Paths.get("results/results.txt"), resultsList, Charset.forName("UTF-8"));
     }
 
     public void inquireVSM() throws IOException {
@@ -61,7 +70,7 @@ public class Inquierer {
         DirectoryReader directoryReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
 
-        indexSearcher.setSimilarity(new ClassicSimilarity());
+       
 
         ArrayList<String> resultsList = new ArrayList<String>();
         System.out.println("Inquiring with VSM Scoring");

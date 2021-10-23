@@ -8,7 +8,8 @@ public class MainFile {
         Indexer indexer = new Indexer();
         Inquierer inquierer = new Inquierer();
         indexer.indexDoc();
-        inquierer.inquireVSM();
-        inquierer.searchBM25();
+        // inquierer.inquireVSM();
+        inquierer.searcher(args[0]);
+        // inquierer.searchBM25();
     }
 }
