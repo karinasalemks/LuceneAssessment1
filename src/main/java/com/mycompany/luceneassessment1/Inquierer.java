@@ -29,9 +29,7 @@ public class Inquierer {
     private static String INDEX_DIR = "src/index";
     DocumentParser documentParser = new DocumentParser();
 
-    public void searcher(String num) throws IOException {
-        ArrayList<String> resultsList = new ArrayList<String>();
-    
+    public void searcher() throws IOException {
         // Create directory if it does not exist
         File outputDir = new File("results");
         if (!outputDir.exists())
@@ -43,23 +41,28 @@ public class Inquierer {
         // create objects to read and search across the index
         DirectoryReader directoryReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
-
-        String runIdentifier ="";
-        if(num.equals("1")){
-            indexSearcher.setSimilarity(new BM25Similarity());
-            System.out.println("Inquiring with BM25 Scoring");
-            runIdentifier ="simpleQueryBM25Scoring";
-        }else{
-            indexSearcher.setSimilarity(new ClassicSimilarity());
-            System.out.println("Inquiring with VSM Scoring");
-            runIdentifier ="simpleQueryVSMScoring";
-        }
-
         List<Map<String, String>> queries = documentParser.getQueries();
 
-        parseSearch(queries, standardAnalyzer, indexSearcher, resultsList,runIdentifier );
+        String runIdentifier = "";
+        String fileName = "";
+        for (int i = 0; i < 2; i++) {
+            ArrayList<String> resultsList = new ArrayList<String>();
+            if (i == 0) {
+                indexSearcher.setSimilarity(new BM25Similarity());
+                System.out.println("Inquiring with BM25 Scoring");
+                runIdentifier = "simpleQueryBM25Scoring";
+                fileName = "resultsBMS25.txt";
+            } else {
+                indexSearcher.setSimilarity(new ClassicSimilarity());
+                System.out.println("Inquiring with VSM Scoring");
+                runIdentifier = "simpleQueryVSMScoring";
+                fileName = "resultsVSM25.txt";
+            }
 
-        Files.write(Paths.get("results/results.txt"), resultsList, Charset.forName("UTF-8"));
+            parseSearch(queries, standardAnalyzer, indexSearcher, resultsList, runIdentifier);
+
+            Files.write(Paths.get("results/" + fileName), resultsList, Charset.forName("UTF-8"));
+        }
     }
 
     public void inquireVSM() throws IOException {
@@ -69,8 +72,6 @@ public class Inquierer {
         // create objects to read and search across the index
         DirectoryReader directoryReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
-
-       
 
         ArrayList<String> resultsList = new ArrayList<String>();
         System.out.println("Inquiring with VSM Scoring");
@@ -104,8 +105,8 @@ public class Inquierer {
                 for (int j = 0; j < scores.length; j++) {
                     int docId = scores[j].doc;
                     Document doc = indexSearcher.doc(docId);
-                    resultsList
-                            .add(Query.get("ID") + " 0 " + doc.get("ID") + " 0 " + scores[j].score + " " + runIdentifier);
+                    resultsList.add(
+                            Query.get("ID") + " 0 " + doc.get("ID") + " 0 " + scores[j].score + " " + runIdentifier);
                 }
             }
         } catch (ParseException | IOException e) {
