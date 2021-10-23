@@ -27,8 +27,9 @@ import org.apache.lucene.store.FSDirectory;
 
 public class Inquierer {
     private static String INDEX_DIR = "src/index";
+    DocumentParser documentParser = new DocumentParser();
 
-    public static void searchBM25() throws IOException {
+    public void searchBM25() throws IOException {
         Analyzer standardAnalyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));
 
@@ -45,14 +46,14 @@ public class Inquierer {
         if (!outputDir.exists())
             outputDir.mkdirs();
 
-        List<Map<String, String>> queries = DocumentParser.getQueries();
+        List<Map<String, String>> queries = documentParser.getQueries();
 
         parseSearch(queries, standardAnalyzer, indexSearcher, resultsList, "simpleQueryBM25Scoring");
 
         Files.write(Paths.get("results/resultsBM25.txt"), resultsList, Charset.forName("UTF-8"));
     }
 
-    public static void inquireVSM() throws IOException {
+    public void inquireVSM() throws IOException {
         Analyzer standardAnalyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));
 
@@ -69,7 +70,7 @@ public class Inquierer {
         if (!outputDir.exists())
             outputDir.mkdirs();
 
-        List<Map<String, String>> queries = DocumentParser.getQueries();
+        List<Map<String, String>> queries = documentParser.getQueries();
 
         parseSearch(queries, standardAnalyzer, indexSearcher, resultsList, "simpleQueryVSMScoring");
 

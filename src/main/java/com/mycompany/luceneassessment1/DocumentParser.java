@@ -19,7 +19,7 @@ public class DocumentParser {
     private static String CORPUS = "src/cran/cran.all.1400";
     private static String QUERIES = "src/cran/cran.qry";
 
-    static ArrayList<Document> getParsedFile() throws IOException {
+    ArrayList<Document> getParsedFile() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(CORPUS)));
         // ArrayList of documents
         ArrayList<Document> documents = new ArrayList<Document>();
@@ -101,7 +101,7 @@ public class DocumentParser {
         return documents;
     }
 
-    static List<Map<String, String>> getQueries() throws IOException {
+    List<Map<String, String>> getQueries() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(QUERIES)));
         // List of queries of type HashMap
         List<Map<String, String>> queries = new ArrayList<Map<String, String>>();
