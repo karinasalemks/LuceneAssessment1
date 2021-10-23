@@ -19,5 +19,11 @@ public class MainFile {
         inquierer.searcher(queries, 0);
         indexer.indexDoc(documents, 1);
         inquierer.searcher(queries, 1);
+        indexer.indexDoc(documents, 2);
+        inquierer.searcher(queries, 2);
+        indexer.indexDoc(documents, 3);
+        inquierer.searcher(queries, 3);
+        indexer.indexDoc(documents, 4);
+        inquierer.searcher(queries, 4);
     }
 }
