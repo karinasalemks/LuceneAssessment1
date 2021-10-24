@@ -133,8 +133,7 @@ public class Inquierer {
                 ScoreDoc[] scores = topDocs.scoreDocs;
 
                 for (int j = 0; j < scores.length; j++) {
-                    int docId = scores[j].doc;
-                    Document doc = indexSearcher.doc(docId);
+                    Document doc = indexSearcher.doc(scores[j].doc);
                     resultsList.add(
                             Query.get("ID") + " 0 " + doc.get("ID") + " 0 " + scores[j].score + " " + runIdentifier);
                 }
