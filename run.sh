@@ -1,7 +1,3 @@
-git clone https://github.com/usnistgov/trec_eval.git
-cd trec_eval
-make
-cd ..
 mvn clean install
 mvn compile
 mvn exec:java -Dexec.mainClass="com.mycompany.luceneassessment1.MainFile" 
