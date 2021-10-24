@@ -42,16 +42,15 @@ public class Inquierer {
          */
         Analyzer analyzer;
         if (type == 1) {
-            analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            analyzer = new EnglishAnalyzer();
         } else if (type == 2) {
             analyzer = new SimpleAnalyzer();
         } else if (type == 3) {
             analyzer = new WhitespaceAnalyzer();
         } else if (type == 4) {
-            analyzer = new CustomAnalyzerK().createCustomAnalyzer();
+            analyzer = new KarinaAnalyzer().createCustomAnalyzer();
         } else {
             analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
-            // analyzer = new StandardAnalyzer();
         }
 
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));

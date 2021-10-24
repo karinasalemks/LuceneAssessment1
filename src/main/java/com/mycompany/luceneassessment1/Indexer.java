@@ -35,7 +35,7 @@ public class Indexer {
         Analyzer analyzer;
         if (type == 1) {
             System.out.println("Indexing using English Analyzer");
-            analyzer = new EnglishAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            analyzer = new EnglishAnalyzer();
         } else if (type == 2) {
             System.out.println("Indexing using Simple Analyzer");
             analyzer = new SimpleAnalyzer();
@@ -44,11 +44,10 @@ public class Indexer {
             analyzer = new WhitespaceAnalyzer();
         } else if (type == 4) {
             System.out.println("Indexing using Karina's custom Analyzer");
-            analyzer = new CustomAnalyzerK().createCustomAnalyzer();
+            analyzer = new KarinaAnalyzer().createCustomAnalyzer();
         } else {
             System.out.println("Indexing using Standard Analyzer");
             analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
-            // analyzer = new StandardAnalyzer();
         }
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));
         IndexWriterConfig indexConfig = new IndexWriterConfig(analyzer);
