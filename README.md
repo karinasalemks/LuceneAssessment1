@@ -2,10 +2,13 @@
 
 ### How to get it working?
 ____
-Run the following commands in order:
-sudo su
-cd LuceneAssessment1/
-bash run.sh
+  Run the following commands in order:
+  
+   sudo su
+   
+   cd LuceneAssessment1/
+   
+   bash run.sh
 
 >The shell file will execute the following commands: a maven clean install, compile the MainFile
 >In which different results will be created for the combination of the scoring approaches and Analyzers
