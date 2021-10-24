@@ -30,7 +30,7 @@ public class Indexer {
     void indexDoc(ArrayList<Document> documents, int type) throws IOException {
         /**
          * To Index using different analyzers: 0-> standard analyzer 1-> english
-         * analyzer 2->simple analyzer 3->whitespace analyzer
+         * analyzer 2->simple analyzer 3->whitespace analyzer 4->Karina's custom analyzer
          */
         Analyzer analyzer;
         if (type == 1) {
@@ -42,6 +42,9 @@ public class Indexer {
         } else if (type == 3) {
             System.out.println("Indexing using Whitespace Analyzer");
             analyzer = new WhitespaceAnalyzer();
+        } else if (type == 4) {
+            System.out.println("Indexing using Karina's custom Analyzer");
+            analyzer = new CustomAnalyzerK().createCustomAnalyzer();
         } else {
             System.out.println("Indexing using Standard Analyzer");
             // analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());

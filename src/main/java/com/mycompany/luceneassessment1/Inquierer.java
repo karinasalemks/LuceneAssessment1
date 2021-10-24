@@ -38,7 +38,7 @@ public class Inquierer {
 
         /**
          * To Query using different analyzers: 0-> standard analyzer 1-> english
-         * analyzer 2->simple analyzer 3->whitespace analyzer
+         * analyzer 2->simple analyzer 3->whitespace analyzer 4->Karina's custom analyzer
          */
         Analyzer analyzer;
         if (type == 1) {
@@ -47,6 +47,8 @@ public class Inquierer {
             analyzer = new SimpleAnalyzer();
         } else if (type == 3) {
             analyzer = new WhitespaceAnalyzer();
+        } else if (type == 4) {
+            analyzer = new CustomAnalyzerK().createCustomAnalyzer();
         } else {
             // analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
             analyzer = new StandardAnalyzer();
@@ -80,6 +82,9 @@ public class Inquierer {
                 case 3:
                     fileName = "resultsBMS25_Whitespace.txt";
                     break;
+                case 4:
+                    fileName = "resultsBMS25_Karina.txt";
+                    break;
                 default:
                     fileName = "resultsBMS25_Standard.txt";
                     break;
@@ -97,6 +102,9 @@ public class Inquierer {
                     break;
                 case 3:
                     fileName = "resultsVSM_Witespace.txt";
+                    break;
+                case 4:
+                    fileName = "resultsVSM_Karina.txt";
                     break;
                 default:
                     fileName = "resultsVSM_Standard.txt";

@@ -17,7 +17,7 @@ public class MainFile {
         Inquierer inquierer = new Inquierer();
         /**
          * To Index using different analyzers: 0-> standard analyzer 1-> english
-         * analyzer 2->simple analyzer 3->whitespace analyzer
+         * analyzer 2->simple analyzer 3->whitespace analyzer 4-> Karina's custom analyzer
          * As well as search the queries using these analyzers
          */
         indexer.indexDoc(documents, 0);
@@ -28,5 +28,7 @@ public class MainFile {
         inquierer.searchQueries(queries, 2);
         indexer.indexDoc(documents, 3);
         inquierer.searchQueries(queries, 3);
+        indexer.indexDoc(documents, 4);
+        inquierer.searchQueries(queries, 4);
     }
 }
