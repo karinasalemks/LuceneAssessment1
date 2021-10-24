@@ -48,7 +48,8 @@ public class Inquierer {
         } else if (type == 3) {
             analyzer = new WhitespaceAnalyzer();
         } else {
-            analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            // analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            analyzer = new StandardAnalyzer();
         }
 
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));
