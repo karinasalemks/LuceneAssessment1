@@ -47,8 +47,8 @@ public class Indexer {
             analyzer = new CustomAnalyzerK().createCustomAnalyzer();
         } else {
             System.out.println("Indexing using Standard Analyzer");
-            // analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
-            analyzer = new StandardAnalyzer();
+            analyzer = new StandardAnalyzer(EnglishAnalyzer.getDefaultStopSet());
+            // analyzer = new StandardAnalyzer();
         }
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIR));
         IndexWriterConfig indexConfig = new IndexWriterConfig(analyzer);

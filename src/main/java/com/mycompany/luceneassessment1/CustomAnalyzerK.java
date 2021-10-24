@@ -8,8 +8,9 @@ import org.apache.lucene.analysis.custom.CustomAnalyzer;
 public class CustomAnalyzerK {
     public Analyzer createCustomAnalyzer() throws IOException {
         Analyzer analyzer = CustomAnalyzer.builder()
-          .withTokenizer("standard")
-          .addTokenFilter("lowercase")
+          .withTokenizer("icu")  
+          .addTokenFilter("lowercase")  
+          .addTokenFilter("asciiFolding")  
           .addTokenFilter("stop")
           .addTokenFilter("kStem")
           .build();
