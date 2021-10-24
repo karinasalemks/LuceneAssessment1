@@ -18,4 +18,7 @@ echo "############## Standard Analyzer ##############"
 echo "############## English Analyzer ##############"
 ./trec_eval -m runid -m map -m gm_map -m P.5 ../src/cran/QRelsCorrectedforTRECeval ../results/resultsVSM_English.txt
 ./trec_eval -m runid -m map -m gm_map -m P.5 ../src/cran/QRelsCorrectedforTRECeval ../results/resultsBMS25_English.txt
+echo "############## Karina's custom Analyzer ##############"
+./trec_eval -m runid -m map -m gm_map -m P.5 ../src/cran/QRelsCorrectedforTRECeval ../results/resultsVSM_Karina.txt
+./trec_eval -m runid -m map -m gm_map -m P.5 ../src/cran/QRelsCorrectedforTRECeval ../results/resultsBMS25_Karina.txt
 
